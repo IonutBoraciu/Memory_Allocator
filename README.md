@@ -1,42 +1,21 @@
-#Boraciu Ionut-Sorin#
+# Memory Allocator Simulating using linked lists
 
-**Grupa: 315CA**
+### Description:
 
-## Tema1
+   After the arena has been allocated, when a block is allocated, the following checks are performed:
+   	* If a block has already been allocated in such a way that the new block continues the virtual memory of the existing one, a new miniblock is added to the already existing block.
+    	* If the first condition is not met, a new block is added in order.
+     	* Finally, a check is performed to determine if adjacent blocks should be concatenated.
+  In the deallocation function, the position of the miniblock is located, and then the corresponding miniblock is freed. If it is the last miniblock in the list, the entire block is also freed. If it is in the middle of the list, the block is split into two separate blocks.
 
-### Descriere:
+  The MPROTECT function changes the access permissions of the data stored in virtual memory zones, preventing them from being accessed, read, etc.
 
-Dupa ce arena a fost alocata, cand se aloca un block se fac urmatoarele verificari:
-	- daca deja a fost alocat un block astfel incat noul block se afla in continuarea 
-	memoriei virtuale a acestuia atunci se va adauga un nou miniblock la block-ul deja
-	existent.
-	- daca prima conditie nu este verificata va fi adaugat in ordine un block nou
-	- la final se verifica daca block-urile adiacente ar trebuii concatenate
+  The WRITE function locates the position from which writing should begin. If the data fits within the current miniblock, it writes everything there. Otherwise, it continues into the following miniblocks, if they exist. If the data to be written is too large, it writes as much as possible within the block.
 
-La functia de eliberare a unui block se cauta pozitia miniblock-ului, iar in functia de acesta
-se elibereaza miniblock-ul corespunzator, daca este ulitmul miniblock din lista atunci se
-elibereaza si block-ul. Iar daca se afla in mijlocul listei, block-ul este spart in 2 block-uri.
+  The READ function reads (if permission allows) the data stored at the specified memory address.
 
-Functia de MPROTECT va schimba permisiunile de accesare a datelor salvate la zonele de memorie
-virtuala, astfel sa nu poata fi accesate, sau citite, etc.
+  The PMAP function prints information about the arena and the access permissions of the allocated memory regions.
 
-Functia WRITE cauta pozitia de unde trebuie sa inceapa sa scrie. Daca are loc in acel miniblock
-va scrie totul in el, altfel va continua pe urmatoarele miniblock-uri, daca exista. Daca
-dimensiunea de scris este prea mare se scrie cat are loc in acel block.
+  The DEALLOC function frees all program resources and stops execution.
 
-Functia READ va citi ( daca are permisiunea sa faca asta) datele salvate in adresa de memorie
-specificata.
-
-Functia PMAP va printa datele din arena si permisiunile de acces ale acestora.
-
-Functia de DEALLOC va elibera toate resursele programului si il va opri.
-
-
-### Comentarii asupra temei:
-
-Consider ca as fi putut sa fiu mai eficient prin unele zone, prin retinerea nu doar a head-ului
-pentru o lista ci si a tail-ului, pentru a le parcurge mai eficient cand cautam o anumita zona
-de memorie.
-
-Din acesta tema, am devenit mai bun in a repara leak-urile si in a le identifica. Si am inteles mai bine cum functioneaza listele dublu inlantuite, m-am obisnuit mai mult cu tipul de
-date void* si cu cast-urile necesare folosirii acestuia.
+Through this project, I have improved my ability to identify and fix memory leaks. Additionally, I gained a better understanding of how doubly linked lists work and became more familiar with void* data types and the necessary type casting for their use.
